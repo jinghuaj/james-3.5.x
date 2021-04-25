@@ -20,7 +20,9 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="OpenJPA" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="apache-james-mailbox-spring" />
+        </datasource-mapping>
         <naming-strategy-map />
       </configuration>
     </facet>

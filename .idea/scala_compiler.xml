@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <profile name="Maven 1" modules="james-server-task,james-server-task-memory,james-server-task-api,event-sourcing-event-store-api,event-sourcing-pojo,james-server-jmap-rfc-8621,event-sourcing-core,james-server-task-distributed,event-sourcing-event-store-memory,event-sourcing-event-store-cassandra,apache-james-mailbox-event-json" />
+  </component>
+</project>
