@@ -67,7 +67,7 @@ public class MemoryAccessTokenRepository implements AccessTokenRepository {
         synchronized (tokensExpirationDates) {
             return Mono.just(
                 Optional.ofNullable(tokensExpirationDates.get(accessToken))
-                    .orElseThrow(() -> new InvalidAccessToken(accessToken)));
+                    .<InvalidAccessToken>orElseThrow(() -> new InvalidAccessToken(accessToken)));
         }
     }
 

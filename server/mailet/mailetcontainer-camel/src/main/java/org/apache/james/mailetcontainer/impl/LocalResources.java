@@ -98,7 +98,7 @@ class LocalResources {
         return recipientRewriteTable.getResolvedMappings(mailAddress.getLocalPart(), mailAddress.getDomain(), ALIAS_TYPES)
             .asStream()
             .map(mapping -> mapping.asMailAddress()
-                .orElseThrow(() -> new IllegalStateException(String.format("Can not compute address for mapping %s", mapping.asString()))))
+                .<IllegalStateException>orElseThrow(() -> new IllegalStateException(String.format("Can not compute address for mapping %s", mapping.asString()))))
             .anyMatch(Throwing.predicate(this::isLocaluser).sneakyThrow());
     }
 }

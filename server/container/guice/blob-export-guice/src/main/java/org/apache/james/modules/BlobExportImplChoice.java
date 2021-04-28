@@ -54,7 +54,7 @@ public enum  BlobExportImplChoice {
             .map(String::trim);
 
         return sanitizedImplName.map(name -> BlobExportImplChoice.from(name)
-            .orElseThrow(() -> new IllegalArgumentException(unknownBlobExportErrorMessage(name))));
+            .<IllegalArgumentException>orElseThrow(() -> new IllegalArgumentException(unknownBlobExportErrorMessage(name))));
     }
 
     private static String unknownBlobExportErrorMessage(String blobExportImpl) {
