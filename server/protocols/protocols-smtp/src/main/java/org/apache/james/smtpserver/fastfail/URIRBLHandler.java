@@ -143,10 +143,10 @@ public class URIRBLHandler implements JamesMessageHook, ProtocolHandler {
         }
     }
 
-    @Override
-    public void sendMessageKafka(Mail mail) {
-
-    }
+    //    @Override
+    //    public void sendMessageKafka(Mail mail) {
+    //
+    //    }
 
     /**
      * Recursively scans all MimeParts of an email for domain strings. Domain

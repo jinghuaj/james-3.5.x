@@ -79,10 +79,10 @@ public class MailPriorityHandler implements JamesMessageHook, ProtocolHandler {
         return HookResult.DECLINED;
     }
 
-    @Override
-    public void sendMessageKafka(Mail mail) {
-
-    }
+    //    @Override
+    //    public void sendMessageKafka(Mail mail) {
+    //
+    //    }
 
     @Override
     public void init(Configuration config) throws ConfigurationException {

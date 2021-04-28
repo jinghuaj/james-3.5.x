@@ -53,9 +53,9 @@ public class AddDefaultAttributesMessageHook implements JamesMessageHook {
         return HookResult.DECLINED;
     }
 
-    @Override
-    public void sendMessageKafka(Mail mail) {
-
-    }
+    //    @Override
+    //    public void sendMessageKafka(Mail mail) {
+    //
+    //    }
 
 }

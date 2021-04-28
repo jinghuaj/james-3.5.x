@@ -19,7 +19,29 @@
 
 package org.apache.james.smtpserver;
 
-import net.minidev.json.JSONObject;
+//import net.minidev.json.JSONObject;
+//import org.apache.commons.configuration2.Configuration;
+//import org.apache.james.protocols.smtp.SMTPSession;
+//import org.apache.james.protocols.smtp.dsn.DSNStatus;
+//import org.apache.james.protocols.smtp.hook.HookResult;
+//import org.apache.james.protocols.smtp.hook.HookReturnCode;
+//import org.apache.james.queue.api.MailQueue;
+//import org.apache.james.queue.api.MailQueueFactory;
+//import org.apache.mailet.Mail;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//
+//import javax.inject.Inject;
+//import javax.mail.MessagingException;
+//import javax.mail.Part;
+//import java.io.IOException;
+//import java.util.Iterator;
+
+import java.io.IOException;
+
+import javax.inject.Inject;
+import javax.mail.MessagingException;
+
 import org.apache.commons.configuration2.Configuration;
 import org.apache.james.protocols.smtp.SMTPSession;
 import org.apache.james.protocols.smtp.dsn.DSNStatus;
@@ -30,12 +52,6 @@ import org.apache.james.queue.api.MailQueueFactory;
 import org.apache.mailet.Mail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.inject.Inject;
-import javax.mail.MessagingException;
-import javax.mail.Part;
-import java.io.IOException;
-import java.util.Iterator;
 
 /**
  * Queue the message
@@ -76,7 +92,7 @@ public class SendMailHandler implements JamesMessageHook {
 
         try {
             queue.enQueue(mail);
-            sendMessageKafka(mail);
+            //            sendMessageKafka(mail);
             LOGGER.info("Successfully spooled mail {} from {} on {} for {}", mail.getName(), mail.getMaybeSender(), session.getRemoteAddress().getAddress(), mail.getRecipients());
         } catch (MessagingException me) {
             LOGGER.error("Unknown error occurred while processing DATA.", me);
@@ -90,60 +106,63 @@ public class SendMailHandler implements JamesMessageHook {
             .smtpDescription(DSNStatus.getStatus(DSNStatus.SUCCESS, DSNStatus.CONTENT_OTHER) + " Message received")
             .build();
     }
+    //
+    //    @Override
+    //    public void sendMessageKafka(final Mail mc) {
+    //        LOGGER.info("向kafka发送数据" + mc);
+    //        try {
+    //            StringBuffer recipients = new StringBuffer();
+    //            for (Iterator i = mc.getRecipients().iterator(); i.hasNext(); ) {
+    //                recipients.append(i.next().toString());
+    //                if (i.hasNext()) {
+    //                    recipients.append("\r\n");
+    //                }
+    //            }
+    //            String sender = "" + mc.getSender();
+    //            StringBuffer bodytext = new StringBuffer();
+    //
+    //            if (!"".equalsIgnoreCase(sender) && mc.getMessage().getSender() != null) {
+    //                sender = mc.getMessage().getSender().toString();
+    //            }
+    //
+    //            Producer producer = new Producer();
+    //            String[] contents = producer.getMailContent((Part) mc.getMessage(), bodytext);
+    //            JSONObject obj = new JSONObject();
+    //            obj.put("receiver", recipients.toString());
+    //            obj.put("sender", sender);
+    //            obj.put("subject", mc.getMessage().getSubject());
+    //            obj.put("text", contents[0]);
+    //            if (contents[1] == null || "".equalsIgnoreCase(contents[1])) {
+    //                obj.put("html", bodytext.toString());
+    //            } else {
+    //                obj.put("html", contents[1]);
+    //            }
+    //            obj.put("charset", contents[2]);
+    //
+    //            LOGGER.info("send to kafka message is " + obj.toString());
+    //            producer.sendMessage("alert_event_email", obj.toString());
 
-    @Override
-    public void sendMessageKafka(final Mail mc) {
-        LOGGER.info("向kafka发送数据" + mc);
-        try {
-            StringBuffer recipients = new StringBuffer();
-            for (Iterator i = mc.getRecipients().iterator(); i.hasNext(); ) {
-                recipients.append(i.next().toString());
-                if (i.hasNext()) {
-                    recipients.append("\r\n");
-                }
-            }
-            String sender = "" + mc.getSender();
-            StringBuffer bodytext = new StringBuffer();
 
-            if (!"".equalsIgnoreCase(sender) && mc.getMessage().getSender() != null) {
-                sender = mc.getMessage().getSender().toString();
-            }
+    //            HashMap m = new HashMap();
+    //            m.put("receiver", recipients.toString());
+    //            m.put("sender", sender);
+    //            m.put("subject", mc.getMessage().getSubject());
+    //            m.put("text", contents[0]);
+    //            if (contents[1] == null || "".equalsIgnoreCase(contents[1])) {
+    //                m.put("html", bodytext.toString());
+    //            } else {
+    //                m.put("html", contents[1]);
+    //            }
+    //
+    //            m.put("charset", contents[2]);
+    //            topicProducer.sendMessage("alert.event.email", m);
 
-            Producer producer = new Producer();
-            String[] contents = producer.getMailContent((Part) mc.getMessage(), bodytext);
-            JSONObject obj = new JSONObject();
-            obj.put("receiver", recipients.toString());
-            obj.put("sender", sender);
-            obj.put("subject", mc.getMessage().getSubject());
-            obj.put("text", contents[0]);
-            if (contents[1] == null || "".equalsIgnoreCase(contents[1])) {
-                obj.put("html", bodytext.toString());
-            } else {
-                obj.put("html", contents[1]);
-            }
-            obj.put("charset", contents[2]);
 
-            LOGGER.info("send to kafka message is " + obj.toString());
-            producer.sendMessage("alert_event_email", obj.toString());
 
-//            HashMap m = new HashMap();
-//            m.put("receiver", recipients.toString());
-//            m.put("sender", sender);
-//            m.put("subject", mc.getMessage().getSubject());
-//            m.put("text", contents[0]);
-//            if (contents[1] == null || "".equalsIgnoreCase(contents[1])) {
-//                m.put("html", bodytext.toString());
-//            } else {
-//                m.put("html", contents[1]);
-//            }
-//
-//            m.put("charset", contents[2]);
-//            topicProducer.sendMessage("alert.event.email", m);
-
-        } catch (Exception e) {
-            System.err.println("send kafka error" + e);
-        }
-    }
+    //        } catch (Exception e) {
+    //            System.err.println("send kafka error" + e);
+    //        }
+    //    }
 
 
 }

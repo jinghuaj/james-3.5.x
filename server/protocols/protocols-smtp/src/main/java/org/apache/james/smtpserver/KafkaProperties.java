@@ -9,5 +9,7 @@ public class KafkaProperties {
     public static final String TOPIC3 = "topic3";
     public static final String CLIENT_ID = "SimpleConsumerDemoClient";
 
-    private KafkaProperties() {}
+    private KafkaProperties() {
+
+    }
 }
