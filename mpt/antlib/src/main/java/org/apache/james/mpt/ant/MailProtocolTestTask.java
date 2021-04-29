@@ -144,7 +144,7 @@ public class MailProtocolTestTask extends Task implements Monitor {
     public int getPort() {
         return port
             .map(Port::getValue)
-            .orElseThrow(() -> new RuntimeException("Port must be set"));
+            .<RuntimeException>orElseThrow(() -> new RuntimeException("Port must be set"));
     }
 
     /**

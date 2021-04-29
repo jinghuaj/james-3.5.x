@@ -227,7 +227,7 @@ public class ForwardRoutes implements Routes {
 
         return mappings.asStream()
                 .map(mapping -> mapping.asMailAddress()
-                        .orElseThrow(() -> new IllegalStateException(String.format("Can not compute address for mapping %s", mapping.asString()))))
+                        .<IllegalStateException>orElseThrow(() -> new IllegalStateException(String.format("Can not compute address for mapping %s", mapping.asString()))))
                 .map(MailAddress::asString)
                 .sorted()
                 .map(ForwardDestinationResponse::new)

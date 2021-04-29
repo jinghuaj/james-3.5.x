@@ -208,7 +208,7 @@ public class MailRepositoriesRoutes implements Routes {
             MailRepositoryPath path = decodedRepositoryPath(request);
             try {
                 return repositoryStoreService.listMails(path, offset, limit)
-                    .orElseThrow(() -> repositoryNotFound(request.params("encodedPath"), path));
+                    .<repositoryNotFound>orElseThrow(() -> repositoryNotFound(request.params("encodedPath"), path));
 
             } catch (MailRepositoryStore.MailRepositoryStoreException | MessagingException e) {
                 throw ErrorResponder.builder()
@@ -272,7 +272,7 @@ public class MailRepositoriesRoutes implements Routes {
     private MimeMessage getMailAsMimeMessage(MailRepositoryPath path, MailKey mailKey) {
         try {
             return repositoryStoreService.retrieveMessage(path, mailKey)
-                .orElseThrow(mailNotFoundError(mailKey));
+                .<mailNotFoundError>orElseThrow(mailNotFoundError(mailKey));
         } catch (MailRepositoryStore.MailRepositoryStoreException | MessagingException e) {
             throw internalServerError(e);
         }
@@ -281,7 +281,7 @@ public class MailRepositoriesRoutes implements Routes {
     private MailDto getMailAsJson(MailRepositoryPath path, MailKey mailKey, Request request) {
         try {
             return repositoryStoreService.retrieveMail(path, mailKey, extractAdditionalFields(request.queryParamOrDefault("additionalFields", "")))
-                .orElseThrow(mailNotFoundError(mailKey));
+                .<mailNotFoundError>orElseThrow(mailNotFoundError(mailKey));
         } catch (MailRepositoryStore.MailRepositoryStoreException | MessagingException e) {
             throw internalServerError(e);
         } catch (IllegalArgumentException e) {
@@ -347,7 +347,7 @@ public class MailRepositoriesRoutes implements Routes {
             MailRepositoryPath path = decodedRepositoryPath(request);
             try {
                 long size = repositoryStoreService.size(path)
-                    .orElseThrow(() -> repositoryNotFound(request.params("encodedPath"), path));
+                    .<repositoryNotFound>orElseThrow(() -> repositoryNotFound(request.params("encodedPath"), path));
                 return new ExtendedMailRepositoryResponse(path, size);
             } catch (MailRepositoryStore.MailRepositoryStoreException e) {
                 throw ErrorResponder.builder()
@@ -518,7 +518,7 @@ public class MailRepositoriesRoutes implements Routes {
             .omitEmptyStrings()
             .splitToList(additionalFieldsParam)
             .stream()
-            .map((field) -> AdditionalField.find(field).orElseThrow(() -> new IllegalArgumentException(field)))
+            .map((field) -> AdditionalField.find(field).<IllegalArgumentException>orElseThrow(() -> new IllegalArgumentException(field)))
             .collect(Guavate.toImmutableSet());
     }
 

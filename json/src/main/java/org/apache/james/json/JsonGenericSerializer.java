@@ -121,7 +121,7 @@ public class JsonGenericSerializer<T, U extends DTO> {
 
     public String serialize(T domainObject) throws JsonProcessingException {
         U dto = dtoConverter.toDTO(domainObject)
-            .orElseThrow(() -> new UnknownTypeException("unknown type " + domainObject.getClass()));
+            .<UnknownTypeException>orElseThrow(() -> new UnknownTypeException("unknown type " + domainObject.getClass()));
         return objectMapper.writeValueAsString(dto);
     }
 
@@ -129,7 +129,7 @@ public class JsonGenericSerializer<T, U extends DTO> {
     public T deserialize(String value) throws IOException {
         U dto = jsonToDTO(value);
         return dtoConverter.toDomainObject(dto)
-            .orElseThrow(() -> new UnknownTypeException("unknown type " + dto.getType()));
+            .<UnknownTypeException>orElseThrow(() -> new UnknownTypeException("unknown type " + dto.getType()));
     }
 
     private U jsonToDTO(String value) throws IOException {
