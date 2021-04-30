@@ -94,7 +94,7 @@ public class GetMessageListRequest implements JmapRequest {
 
         public Builder limit(long limit) {
             this.limit = Number.DEFAULT_FACTORY.from(limit)
-                .orElseThrow(() -> new IllegalArgumentException(Number.VALIDATION_MESSAGE));
+                .<IllegalArgumentException>orElseThrow(() -> new IllegalArgumentException(Number.VALIDATION_MESSAGE));
             return this;
         }
 

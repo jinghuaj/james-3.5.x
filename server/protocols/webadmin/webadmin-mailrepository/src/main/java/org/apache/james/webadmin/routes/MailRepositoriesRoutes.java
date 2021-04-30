@@ -234,7 +234,7 @@ public class MailRepositoriesRoutes implements Routes {
     }
 
     @GET
-    @Produces("application/json, message/rfc822")
+    //    @Produces("application/json, message/rfc822")
     @Path("/{encodedPath}/mails/{mailKey}")
     @ApiOperation(value = "Retrieving a specific mail details (this endpoint can accept both \"application/json\" or \"message/rfc822\")")
     @ApiResponses(value = {
@@ -518,7 +518,7 @@ public class MailRepositoriesRoutes implements Routes {
             .omitEmptyStrings()
             .splitToList(additionalFieldsParam)
             .stream()
-            .map((field) -> AdditionalField.find(field).orElseThrow(() -> new IllegalArgumentException(field)))
+            .map((field) -> AdditionalField.find(field).<IllegalArgumentException>orElseThrow(() -> new IllegalArgumentException(field)))
             .collect(Guavate.toImmutableSet());
     }
 

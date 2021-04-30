@@ -117,7 +117,7 @@ public class AmqpForwardAttribute extends GenericMailet {
 
     private Stream<byte[]> getAttributeContent(Attribute attribute) throws MailetException {
         return extractAttributeValueContent(attribute.getValue().value())
-                .<MailetException>orElseThrow(() -> new MailetException("Invalid attribute found into attribute "
+                .orElseThrow(() -> new MailetException("Invalid attribute found into attribute "
                     + this.attribute.asString() + "class Map or List or String expected but "
                     + attribute.toString() + " found."));
     }

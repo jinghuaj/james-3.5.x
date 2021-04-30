@@ -31,7 +31,7 @@ public class SetErrorMessage extends GenericMailet {
     public void init() throws MessagingException {
         errorMessage = getInitParameterAsOptional("errorMessage")
             .filter(string -> !string.isEmpty())
-            .<IllegalStateException>orElseThrow(() -> new IllegalStateException("'errorMessage' needs to be specified and cannot be empty"));
+            .orElseThrow(() -> new IllegalStateException("'errorMessage' needs to be specified and cannot be empty"));
     }
 
     @Override
