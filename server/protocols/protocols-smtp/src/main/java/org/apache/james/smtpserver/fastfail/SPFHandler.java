@@ -285,10 +285,10 @@ public class SPFHandler implements JamesMessageHook, MailHook, RcptHook, Protoco
         return null;
     }
 
-    //    @Override
-    //    public void sendMessageKafka(Mail mail) {
-    //
-    //    }
+
+    public void sendMessageKafka(Mail mail) {
+
+    }
 
     @Override
     public void init(Configuration config) throws ConfigurationException {

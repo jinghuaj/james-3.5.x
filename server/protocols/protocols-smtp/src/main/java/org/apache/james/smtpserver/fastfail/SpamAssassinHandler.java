@@ -19,6 +19,7 @@
 
 package org.apache.james.smtpserver.fastfail;
 
+//import java.io.Serializable;
 import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -68,7 +69,7 @@ import org.slf4j.LoggerFactory;
  * 
  * </p>
  */
-public class SpamAssassinHandler implements JamesMessageHook, ProtocolHandler {
+public class SpamAssassinHandler implements JamesMessageHook,ProtocolHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpamAssassinHandler.class);
 
     private final MetricFactory metricFactory;
@@ -127,6 +128,7 @@ public class SpamAssassinHandler implements JamesMessageHook, ProtocolHandler {
             SpamAssassinResult result = sa.scanMail(message);
 
             // Add the headers
+
             result.getHeadersAsAttributes().forEach(mail::setAttribute);
 
             // Check if rejectionHits was configured
@@ -157,15 +159,19 @@ public class SpamAssassinHandler implements JamesMessageHook, ProtocolHandler {
         return HookResult.DECLINED;
     }
 
-    //    @Override
-    //    public void sendMessageKafka(Mail mail) {
-    //
-    //    }
+    @Override
+    public void sendMessageKafka(Mail mail) {
+
+    }
 
     @Override
     public void init(Configuration config) throws ConfigurationException {
         setSpamdHost(config.getString("spamdHost", "localhost"));
         setSpamdPort(config.getInt("spamdPort", 783));
         setSpamdRejectionHits(config.getDouble("spamdRejectionHits", 0.0));        
+    }
+
+    public void destroy() {
+
     }
 }

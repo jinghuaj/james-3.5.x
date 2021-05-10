@@ -36,6 +36,6 @@ public interface JamesMessageHook extends Hook {
      */
     HookResult onMessage(SMTPSession session, Mail mail);
 
-    //    void sendMessageKafka(Mail mail);
+    void sendMessageKafka(Mail mail);
 
 }

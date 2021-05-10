@@ -120,6 +120,7 @@ public class SpamAssassinResult {
         return headersAsAttributes;
     }
 
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
