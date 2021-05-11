@@ -10,29 +10,32 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
-
-
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class Producer  {
     private final KafkaProducer<Integer, String> producer;
+    private static final Logger logger = LoggerFactory.getLogger(Producer.class);
 
     public Producer() {
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaProperties.KAFKA_SERVER_URL);
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, 4096);
-        props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 40960);
+        props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 409600);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         producer = new KafkaProducer<>(props);
+
+        //        logger.info("KAFKA INIT: " + props.toString());
     }
+
+
 
     public void sendMessage(String topic,String message) {
         try {
             producer.send(new ProducerRecord<>(topic,message)).get();
-            System.out.println("Sent message: (" + topic + ", " + message + ")");
+        //            System.out.println("Sent message: (" + topic + ", " + message + ")");
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

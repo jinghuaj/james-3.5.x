@@ -30,6 +30,7 @@ import javax.mail.MessagingException;
 import javax.mail.Part;
 
 import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.james.protocols.smtp.SMTPSession;
 import org.apache.james.protocols.smtp.dsn.DSNStatus;
 import org.apache.james.protocols.smtp.hook.HookResult;
@@ -59,9 +60,9 @@ public class SendMailHandler implements JamesMessageHook {
         this.queueFactory = queueFactory;
     }
 
-    @Override
-    public void init(Configuration config) {
-        queue = queueFactory.createQueue(MailQueueFactory.SPOOL);
+
+    public void init(Configuration config) throws ConfigurationException {
+        this.queue = this.queueFactory.createQueue(MailQueueFactory.SPOOL);
     }
 
     @Override
