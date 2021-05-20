@@ -20,7 +20,8 @@ public class Producer  {
 
     public Producer() {
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaProperties.KAFKA_SERVER_URL);
+        KafkaProperties kafkaprops = new KafkaProperties();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaprops.getKafkaServerUrl());
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, 4096);
         props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 409600);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
