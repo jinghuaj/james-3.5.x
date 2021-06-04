@@ -99,6 +99,12 @@ public class SendMailHandler implements JamesMessageHook {
     }
 
 
+    /**
+     *
+     * @Author: yanjinghua
+     * @Description: 将邮件内容推送到kafka
+     * @Date:2021/06/04
+     */
     public void sendMessageKafka(final Mail mc) {
         LOGGER.info("向kafka发送数据" + mc);
         try {

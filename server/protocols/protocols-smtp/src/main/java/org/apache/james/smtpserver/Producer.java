@@ -42,7 +42,12 @@ public class Producer  {
         }
     }
 
-
+    /**
+     *
+     * @Author: yanjinghua
+     * @Description: 将邮件的bodytext解析为text和html
+     * @Date:2021/06/04
+     */
     public String[] getMailContent(Part part, StringBuffer bodytext) throws Exception {
         String[] contents = new String[3];
 
